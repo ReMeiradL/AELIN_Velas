@@ -140,12 +140,15 @@ def resumo_estoque():
 
 def buscar_usuario(nome):
     return consultar(
-        "SELECT id, nome, senha_hash FROM usuarios WHERE nome = %s", (nome,), um=True
+        "SELECT id, nome, senha_hash, senha_trocada FROM usuarios WHERE nome = %s", (nome,), um=True
     )
 
 
 def atualizar_senha(id, senha_hash):
-    executar("UPDATE usuarios SET senha_hash = %s WHERE id = %s", (senha_hash, id))
+    executar(
+        "UPDATE usuarios SET senha_hash = %s, senha_trocada = TRUE WHERE id = %s",
+        (senha_hash, id),
+    )
 
 
 def atualizar_nome(id, nome):

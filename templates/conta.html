@@ -2,18 +2,31 @@
 
 {% block conteudo %}
 <main class="wrap painel">
-    <div class="caixa-form">
-        <h1>Minha conta</h1>
-        <p class="sub">Dados de acesso ao painel de estoque.</p>
+    {% include "_conta_nav.html" %}
 
-        <p class="rotulo">Nome de acesso</p>
-        <p class="dado">{{ session.usuario }}</p>
+    <h1>Minha conta</h1>
+    <p class="sub">Olá, <b>{{ session.usuario }}</b>. Daqui você controla o estoque e os dados de acesso.</p>
 
-        <p class="botoes">
-            <a class="btn" href="/conta/senha">Trocar senha</a>
-            <a class="btn sec-escuro" href="/conta/usuario">Trocar nome de acesso</a>
-        </p>
-        <p class="nota"><a href="/estoque">← Voltar ao estoque</a></p>
+    <div class="kpis">
+        <div class="kpi"><b>{{ resumo.itens }}</b><span>Produtos e kits</span></div>
+        <div class="kpi"><b>{{ resumo.unidades }}</b><span>Unidades em estoque</span></div>
+        <div class="kpi baixo"><b>{{ resumo.baixos }}</b><span>Estoque baixo</span></div>
+        <div class="kpi zero"><b>{{ resumo.esgotados }}</b><span>Esgotados</span></div>
+    </div>
+
+    <div class="grade g3">
+        <a class="card atalho" href="/conta/estoque">
+            <h3>Estoque</h3>
+            <p class="nota">Quantidades, novos itens e disponibilidade dos aromas.</p>
+        </a>
+        <a class="card atalho" href="/conta/senha">
+            <h3>Trocar senha</h3>
+            <p class="nota">Escolha uma senha só sua para o painel.</p>
+        </a>
+        <a class="card atalho" href="/conta/usuario">
+            <h3>Trocar nome de acesso</h3>
+            <p class="nota">Nome atual: {{ session.usuario }}</p>
+        </a>
     </div>
 </main>
 {% endblock %}

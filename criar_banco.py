@@ -161,6 +161,9 @@ CREATE TABLE IF NOT EXISTS usuarios (
 )
 """)
 
+# Marca se a senha inicial já foi trocada (usada para o aviso de primeiro acesso).
+cursor.execute("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS senha_trocada BOOLEAN NOT NULL DEFAULT FALSE")
+
 for ordem, nome in enumerate(CATEGORIAS, start=1):
     cursor.execute(
         "INSERT INTO categorias (nome, ordem) VALUES (%s, %s) ON CONFLICT (nome) DO NOTHING",
@@ -200,8 +203,10 @@ if cursor.fetchone()["n"] == 0:
             (faixa, desconto),
         )
 
-cursor.execute("SELECT id FROM usuarios WHERE nome = %s", ("admin",))
-if cursor.fetchone() is None:
+# O acesso inicial só é criado se ainda não existir nenhum usuário. Assim, se o nome
+# "admin" for trocado na conta, um novo deploy não recria um admin com a senha inicial.
+cursor.execute("SELECT COUNT(*) AS n FROM usuarios")
+if cursor.fetchone()["n"] == 0:
     # O padrão serve só para rodar em casa; em produção defina ADMIN_SENHA no ambiente.
     senha = os.environ.get("ADMIN_SENHA", "admin-so-para-desenvolvimento")
     cursor.execute(

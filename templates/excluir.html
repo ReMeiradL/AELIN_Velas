@@ -2,13 +2,14 @@
 
 {% block conteudo %}
 <main class="wrap painel">
-    <form class="caixa-form" action="/estoque/{{ produto.id }}/excluir" method="POST">
+    {% include "_conta_nav.html" %}
+    <form class="caixa-form" action="/conta/estoque/{{ produto.id }}/excluir" method="POST">
         <input type="hidden" name="csrf" value="{{ csrf_token() }}">
         <h1>Excluir item</h1>
         <p>Tem certeza que deseja excluir <b>{{ produto.nome }}</b>? Essa ação não pode ser desfeita.</p>
         <p class="botoes">
             <button class="btn perigo" type="submit">Sim, excluir</button>
-            <a class="btn sec-escuro" href="/estoque">Cancelar</a>
+            <a class="btn sec-escuro" href="/conta/estoque">Cancelar</a>
         </p>
     </form>
 </main>

@@ -2,6 +2,7 @@
 
 {% block conteudo %}
 <main class="wrap painel">
+    {% include "_conta_nav.html" %}
     <form class="caixa-form" action="{{ acao }}" method="POST">
         <input type="hidden" name="csrf" value="{{ csrf_token() }}">
         <h1>{{ titulo }}</h1>
@@ -29,7 +30,7 @@
 
         <p class="botoes">
             <button class="btn" type="submit">Salvar</button>
-            <a class="btn sec-escuro" href="/estoque">Cancelar</a>
+            <a class="btn sec-escuro" href="/conta/estoque">Cancelar</a>
         </p>
     </form>
 </main>

@@ -3,6 +3,7 @@
 
 {% block conteudo %}
 <main class="wrap painel">
+    {% include "_conta_nav.html" %}
     <h1>Estoque</h1>
     <p class="sub">Controle as quantidades e a disponibilidade dos aromas exibida na loja.</p>
 
@@ -14,13 +15,13 @@
     </div>
 
     <nav class="abas">
-        <a class="aba {{ 'on' if aba == 'produtos' }}" href="/estoque">Produtos</a>
-        <a class="aba {{ 'on' if aba == 'kits' }}" href="/estoque/kits">Kits</a>
-        <a class="aba {{ 'on' if aba == 'aromas' }}" href="/estoque/aromas">Aromas</a>
+        <a class="aba {{ 'on' if aba == 'produtos' }}" href="/conta/estoque">Produtos</a>
+        <a class="aba {{ 'on' if aba == 'kits' }}" href="/conta/estoque/kits">Kits</a>
+        <a class="aba {{ 'on' if aba == 'aromas' }}" href="/conta/estoque/aromas">Aromas</a>
     </nav>
 
     {% if aba == "produtos" %}
-    <form class="ferramentas" action="/estoque" method="GET">
+    <form class="ferramentas" action="/conta/estoque" method="GET">
         <input type="text" name="busca" value="{{ busca }}" placeholder="Buscar item…" aria-label="Buscar item">
         <select name="categoria" aria-label="Categoria">
             <option value="">Todas as categorias</option>
@@ -29,7 +30,7 @@
             {% endfor %}
         </select>
         <button class="btn peq" type="submit">Filtrar</button>
-        <a class="btn peq sec-escuro" href="/estoque/novo">+ Novo item</a>
+        <a class="btn peq sec-escuro" href="/conta/estoque/novo">+ Novo item</a>
     </form>
 
     {% if produtos %}
@@ -42,7 +43,7 @@
                 <td>{{ p.categoria }}</td>
                 <td>{{ p.preco|brl }}</td>
                 <td>
-                    <form class="qt" action="/estoque/produtos/{{ p.id }}/ajustar" method="POST">
+                    <form class="qt" action="/conta/estoque/produtos/{{ p.id }}/ajustar" method="POST">
                         <input type="hidden" name="csrf" value="{{ csrf_token() }}">
                         <button name="delta" value="-1" aria-label="Diminuir">−</button>
                         <span>{{ p.estoque }}</span>
@@ -51,8 +52,8 @@
                 </td>
                 <td>{{ status(p.estoque, limite) }}</td>
                 <td class="acoes">
-                    <a href="/estoque/{{ p.id }}/editar">Editar</a>
-                    <a href="/estoque/{{ p.id }}/excluir">Excluir</a>
+                    <a href="/conta/estoque/{{ p.id }}/editar">Editar</a>
+                    <a href="/conta/estoque/{{ p.id }}/excluir">Excluir</a>
                 </td>
             </tr>
             {% endfor %}
@@ -73,7 +74,7 @@
                 <td>{{ k.itens }}</td>
                 <td>{{ k.preco|brl }}</td>
                 <td>
-                    <form class="qt" action="/estoque/kits/{{ k.id }}/ajustar" method="POST">
+                    <form class="qt" action="/conta/estoque/kits/{{ k.id }}/ajustar" method="POST">
                         <input type="hidden" name="csrf" value="{{ csrf_token() }}">
                         <button name="delta" value="-1" aria-label="Diminuir">−</button>
                         <span>{{ k.estoque }}</span>
@@ -95,7 +96,7 @@
                 <td>{{ a.nome }}</td>
                 <td>{{ a.familia }}</td>
                 <td>
-                    <form action="/estoque/aromas/{{ a.id }}/alternar" method="POST">
+                    <form action="/conta/estoque/aromas/{{ a.id }}/alternar" method="POST">
                         <input type="hidden" name="csrf" value="{{ csrf_token() }}">
                         <button class="pilula {{ 'ligado' if a.disponivel else 'desligado' }}" type="submit">
                             {{ 'Disponível' if a.disponivel else 'Indisponível' }}

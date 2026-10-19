@@ -142,9 +142,10 @@ def login():
             return render_template("login.html", erro="Usuário ou senha inválidos.")
 
         session["usuario"] = usuario["nome"]
+        session["aviso_acesso"] = not usuario["senha_trocada"]  # avisa enquanto a senha inicial não for trocada
         session.pop("csrf", None)  # novo token a cada login
         flash("Login realizado com sucesso!")
-        return redirect("/estoque")
+        return redirect("/conta")
 
     return render_template("login.html")
 
@@ -152,6 +153,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.pop("usuario", None)
+    session.pop("aviso_acesso", None)
     session.pop("csrf", None)
     return redirect("/")
 
@@ -161,7 +163,12 @@ def logout():
 @app.route("/conta")
 @login_required
 def conta():
-    return render_template("conta.html")
+    return render_template("conta.html", resumo=banco.resumo_estoque())
+
+
+@app.route("/estoque")
+def estoque_endereco_antigo():
+    return redirect("/conta/estoque")
 
 
 @app.route("/conta/senha", methods=["GET", "POST"])
@@ -191,6 +198,7 @@ def conta_senha():
             return render_template("conta_senha.html", erro=erro)
 
         banco.atualizar_senha(usuario["id"], generate_password_hash(nova))
+        session["aviso_acesso"] = False
         flash("Senha alterada com sucesso!")
         return redirect("/conta")
 
@@ -244,7 +252,7 @@ def pagina_estoque(aba, **dados):
     )
 
 
-@app.route("/estoque")
+@app.route("/conta/estoque")
 @login_required
 def estoque():
     busca = request.args.get("busca", "").strip()
@@ -258,13 +266,13 @@ def estoque():
     )
 
 
-@app.route("/estoque/kits")
+@app.route("/conta/estoque/kits")
 @login_required
 def estoque_kits():
     return pagina_estoque("kits", kits=banco.listar_kits())
 
 
-@app.route("/estoque/aromas")
+@app.route("/conta/estoque/aromas")
 @login_required
 def estoque_aromas():
     return pagina_estoque("aromas", aromas=banco.listar_aromas())
@@ -274,25 +282,25 @@ def delta_do_form():
     return 1 if request.form.get("delta") == "1" else -1
 
 
-@app.route("/estoque/produtos/<int:id>/ajustar", methods=["POST"])
+@app.route("/conta/estoque/produtos/<int:id>/ajustar", methods=["POST"])
 @login_required
 def produto_ajustar(id):
     banco.ajustar_estoque_produto(id, delta_do_form())
-    return redirect("/estoque")
+    return redirect("/conta/estoque")
 
 
-@app.route("/estoque/kits/<int:id>/ajustar", methods=["POST"])
+@app.route("/conta/estoque/kits/<int:id>/ajustar", methods=["POST"])
 @login_required
 def kit_ajustar(id):
     banco.ajustar_estoque_kit(id, delta_do_form())
-    return redirect("/estoque/kits")
+    return redirect("/conta/estoque/kits")
 
 
-@app.route("/estoque/aromas/<int:id>/alternar", methods=["POST"])
+@app.route("/conta/estoque/aromas/<int:id>/alternar", methods=["POST"])
 @login_required
 def aroma_alternar(id):
     banco.alternar_aroma(id)
-    return redirect("/estoque/aromas")
+    return redirect("/conta/estoque/aromas")
 
 
 # ---------- cadastro de produtos ----------
@@ -333,7 +341,7 @@ def ler_formulario_produto():
     return valores, (valores["nome"], categoria_id, preco, estoque), None
 
 
-@app.route("/estoque/novo", methods=["GET", "POST"])
+@app.route("/conta/estoque/novo", methods=["GET", "POST"])
 @login_required
 def produto_novo():
     categorias = banco.listar_categorias()
@@ -342,17 +350,17 @@ def produto_novo():
     if request.method == "POST":
         valores, dados, erro = ler_formulario_produto()
         if erro:
-            return render_template("produto_form.html", titulo="Novo item", acao="/estoque/novo",
+            return render_template("produto_form.html", titulo="Novo item", acao="/conta/estoque/novo",
                                    categorias=categorias, valores=valores, erro=erro)
         banco.cadastrar_produto(*dados)
         flash("Produto cadastrado com sucesso!")
-        return redirect("/estoque")
+        return redirect("/conta/estoque")
 
-    return render_template("produto_form.html", titulo="Novo item", acao="/estoque/novo",
+    return render_template("produto_form.html", titulo="Novo item", acao="/conta/estoque/novo",
                            categorias=categorias, valores=valores)
 
 
-@app.route("/estoque/<int:id>/editar", methods=["GET", "POST"])
+@app.route("/conta/estoque/<int:id>/editar", methods=["GET", "POST"])
 @login_required
 def produto_editar(id):
     produto = banco.buscar_produto(id)
@@ -360,7 +368,7 @@ def produto_editar(id):
         return "Produto não encontrado!", 404
 
     categorias = banco.listar_categorias()
-    acao = f"/estoque/{id}/editar"
+    acao = f"/conta/estoque/{id}/editar"
 
     if request.method == "POST":
         valores, dados, erro = ler_formulario_produto()
@@ -369,7 +377,7 @@ def produto_editar(id):
                                    categorias=categorias, valores=valores, erro=erro)
         banco.atualizar_produto(id, *dados)
         flash("Produto atualizado com sucesso!")
-        return redirect("/estoque")
+        return redirect("/conta/estoque")
 
     valores = {
         "nome": produto["nome"],
@@ -381,7 +389,7 @@ def produto_editar(id):
                            categorias=categorias, valores=valores)
 
 
-@app.route("/estoque/<int:id>/excluir", methods=["GET", "POST"])
+@app.route("/conta/estoque/<int:id>/excluir", methods=["GET", "POST"])
 @login_required
 def produto_excluir(id):
     produto = banco.buscar_produto(id)
@@ -391,7 +399,7 @@ def produto_excluir(id):
     if request.method == "POST":
         banco.excluir_produto(id)
         flash("Produto excluído com sucesso!")
-        return redirect("/estoque")
+        return redirect("/conta/estoque")
 
     return render_template("excluir.html", produto=produto)
 

@@ -2,6 +2,7 @@
 
 {% block conteudo %}
 <main class="wrap painel">
+    {% include "_conta_nav.html" %}
     <form class="caixa-form" action="/conta/usuario" method="POST">
         <input type="hidden" name="csrf" value="{{ csrf_token() }}">
         <h1>Trocar nome de acesso</h1>

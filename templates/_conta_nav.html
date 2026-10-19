@@ -1,0 +1,15 @@
+{# Menu interno da área da conta. Mostrado no topo de todas as páginas /conta/... #}
+<nav class="conta-nav" aria-label="Área da conta">
+    <a href="/conta" class="{{ 'ativo' if request.path == '/conta' }}">Resumo</a>
+    <a href="/conta/estoque" class="{{ 'ativo' if request.path.startswith('/conta/estoque') }}">Estoque</a>
+    <a href="/conta/senha" class="{{ 'ativo' if request.path == '/conta/senha' }}">Trocar senha</a>
+    <a href="/conta/usuario" class="{{ 'ativo' if request.path == '/conta/usuario' }}">Trocar nome de acesso</a>
+</nav>
+
+{% if session.aviso_acesso %}
+<p class="aviso-acesso">
+    <b>Você está usando o acesso inicial.</b>
+    Por segurança, <a href="/conta/senha">troque a senha</a> e, se quiser,
+    também o <a href="/conta/usuario">nome de acesso</a>.
+</p>
+{% endif %}
