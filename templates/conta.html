@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<main class="wrap painel">
+    <div class="caixa-form">
+        <h1>Minha conta</h1>
+        <p class="sub">Dados de acesso ao painel de estoque.</p>
+
+        <p class="rotulo">Nome de acesso</p>
+        <p class="dado">{{ session.usuario }}</p>
+
+        <p class="botoes">
+            <a class="btn" href="/conta/senha">Trocar senha</a>
+            <a class="btn sec-escuro" href="/conta/usuario">Trocar nome de acesso</a>
+        </p>
+        <p class="nota"><a href="/estoque">← Voltar ao estoque</a></p>
+    </div>
+</main>
+{% endblock %}

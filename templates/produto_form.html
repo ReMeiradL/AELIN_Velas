@@ -3,6 +3,7 @@
 {% block conteudo %}
 <main class="wrap painel">
     <form class="caixa-form" action="{{ acao }}" method="POST">
+        <input type="hidden" name="csrf" value="{{ csrf_token() }}">
         <h1>{{ titulo }}</h1>
 
         {% if erro %}

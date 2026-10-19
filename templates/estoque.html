@@ -43,6 +43,7 @@
                 <td>{{ p.preco|brl }}</td>
                 <td>
                     <form class="qt" action="/estoque/produtos/{{ p.id }}/ajustar" method="POST">
+                        <input type="hidden" name="csrf" value="{{ csrf_token() }}">
                         <button name="delta" value="-1" aria-label="Diminuir">−</button>
                         <span>{{ p.estoque }}</span>
                         <button name="delta" value="1" aria-label="Aumentar">+</button>
@@ -73,6 +74,7 @@
                 <td>{{ k.preco|brl }}</td>
                 <td>
                     <form class="qt" action="/estoque/kits/{{ k.id }}/ajustar" method="POST">
+                        <input type="hidden" name="csrf" value="{{ csrf_token() }}">
                         <button name="delta" value="-1" aria-label="Diminuir">−</button>
                         <span>{{ k.estoque }}</span>
                         <button name="delta" value="1" aria-label="Aumentar">+</button>
@@ -94,6 +96,7 @@
                 <td>{{ a.familia }}</td>
                 <td>
                     <form action="/estoque/aromas/{{ a.id }}/alternar" method="POST">
+                        <input type="hidden" name="csrf" value="{{ csrf_token() }}">
                         <button class="pilula {{ 'ligado' if a.disponivel else 'desligado' }}" type="submit">
                             {{ 'Disponível' if a.disponivel else 'Indisponível' }}
                         </button>

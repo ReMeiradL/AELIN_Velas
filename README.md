@@ -43,6 +43,7 @@ AELIN/
 | `/descontos` | todos | descontos progressivos |
 | `/pedido` | todos | como fazer o pedido, WhatsApp e Instagram |
 | `/login`, `/logout` | todos | entrada e saída do painel |
+| `/conta`, `/conta/senha`, `/conta/usuario` | logado | trocar a senha e o nome de acesso |
 | `/estoque`, `/estoque/kits`, `/estoque/aromas` | logado | painel com +/−, busca e disponibilidade dos aromas |
 | `/estoque/novo`, `/estoque/<id>/editar`, `/estoque/<id>/excluir` | logado | cadastro de produtos |
 

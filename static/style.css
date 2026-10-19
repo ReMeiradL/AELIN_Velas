@@ -246,6 +246,8 @@ a.atalho h3 { color: var(--verde); }
 .caixa-form { margin: 0 auto; max-width: 460px; }
 .caixa-form h1 { font-size: 22px; margin-bottom: 6px; }
 .botoes { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+.rotulo { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-top: 14px; }
+.dado { font-size: 20px; font-weight: bold; color: var(--verde); overflow-wrap: anywhere; }
 
 label { display: block; font-size: 13px; margin: 14px 0 4px; }
 input, select {

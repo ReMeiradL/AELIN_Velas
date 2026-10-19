@@ -1,9 +1,11 @@
+import hmac
 import os
+import secrets
 from decimal import Decimal, InvalidOperation
 from functools import wraps
 
 from flask import Flask, render_template, request, redirect, flash, session
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 import banco
 
@@ -12,14 +14,41 @@ app = Flask(__name__)
 # O padrão serve só para rodar em casa; em produção defina SECRET_KEY no ambiente.
 app.secret_key = os.environ.get("SECRET_KEY", "aelin-chave-so-para-desenvolvimento")
 
+# O navegador não envia o cookie de login em requisições vindas de outros sites.
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+
 WHATSAPP = "5583991358966"
 INSTAGRAM = "aelinvelas"
 FAMILIAS = ["Floral", "Frutado", "Gourmand", "Oriental", "Cítrico", "Herbal", "Amadeirado", "Especiarias"]
+SENHA_MINIMA = 8
+NOME_MINIMO = 3
+NOME_MAXIMO = 40
 
 
 @app.context_processor
 def dados_da_loja():
-    return {"whatsapp": WHATSAPP, "instagram": INSTAGRAM}
+    return {"whatsapp": WHATSAPP, "instagram": INSTAGRAM, "senha_minima": SENHA_MINIMA}
+
+
+# ---------- proteção contra envios forjados (CSRF) ----------
+
+def token_csrf():
+    """Token da sessão; todo formulário POST leva esse valor em um campo escondido."""
+    if "csrf" not in session:
+        session["csrf"] = secrets.token_hex(16)
+    return session["csrf"]
+
+
+app.jinja_env.globals["csrf_token"] = token_csrf
+
+
+@app.before_request
+def conferir_csrf():
+    if request.method == "POST":
+        enviado = request.form.get("csrf", "")
+        esperado = session.get("csrf", "")
+        if not esperado or not hmac.compare_digest(enviado, esperado):
+            return "Requisição inválida ou sessão expirada. Volte à página anterior, recarregue e tente de novo.", 400
 
 
 @app.template_filter("brl")
@@ -113,6 +142,7 @@ def login():
             return render_template("login.html", erro="Usuário ou senha inválidos.")
 
         session["usuario"] = usuario["nome"]
+        session.pop("csrf", None)  # novo token a cada login
         flash("Login realizado com sucesso!")
         return redirect("/estoque")
 
@@ -122,7 +152,84 @@ def login():
 @app.route("/logout")
 def logout():
     session.pop("usuario", None)
+    session.pop("csrf", None)
     return redirect("/")
+
+
+# ---------- minha conta ----------
+
+@app.route("/conta")
+@login_required
+def conta():
+    return render_template("conta.html")
+
+
+@app.route("/conta/senha", methods=["GET", "POST"])
+@login_required
+def conta_senha():
+    if request.method == "POST":
+        atual = request.form["atual"]
+        nova = request.form["nova"]
+        confirmacao = request.form["confirmacao"]
+
+        usuario = banco.buscar_usuario(session["usuario"])
+        if usuario is None:
+            session.pop("usuario", None)
+            return redirect("/login")
+
+        erro = None
+        if not check_password_hash(usuario["senha_hash"], atual):
+            erro = "A senha atual está incorreta."
+        elif len(nova) < SENHA_MINIMA:
+            erro = f"A nova senha deve ter pelo menos {SENHA_MINIMA} caracteres."
+        elif nova != confirmacao:
+            erro = "A confirmação não é igual à nova senha."
+        elif nova == atual:
+            erro = "A nova senha deve ser diferente da atual."
+
+        if erro:
+            return render_template("conta_senha.html", erro=erro)
+
+        banco.atualizar_senha(usuario["id"], generate_password_hash(nova))
+        flash("Senha alterada com sucesso!")
+        return redirect("/conta")
+
+    return render_template("conta_senha.html")
+
+
+@app.route("/conta/usuario", methods=["GET", "POST"])
+@login_required
+def conta_usuario():
+    if request.method == "POST":
+        atual = request.form["atual"]
+        novo_nome = request.form["nome"].strip()
+
+        usuario = banco.buscar_usuario(session["usuario"])
+        if usuario is None:
+            session.pop("usuario", None)
+            return redirect("/login")
+
+        outro = banco.buscar_usuario(novo_nome)
+
+        erro = None
+        if not check_password_hash(usuario["senha_hash"], atual):
+            erro = "A senha atual está incorreta."
+        elif not NOME_MINIMO <= len(novo_nome) <= NOME_MAXIMO:
+            erro = f"O nome de acesso deve ter de {NOME_MINIMO} a {NOME_MAXIMO} caracteres."
+        elif novo_nome == usuario["nome"]:
+            erro = "Esse já é o seu nome de acesso."
+        elif outro is not None:
+            erro = "Esse nome de acesso já está em uso."
+
+        if erro:
+            return render_template("conta_usuario.html", erro=erro, nome=novo_nome)
+
+        banco.atualizar_nome(usuario["id"], novo_nome)
+        session["usuario"] = novo_nome
+        flash("Nome de acesso alterado com sucesso!")
+        return redirect("/conta")
+
+    return render_template("conta_usuario.html", nome="")
 
 
 # ---------- painel de estoque ----------

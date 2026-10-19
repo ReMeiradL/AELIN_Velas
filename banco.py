@@ -142,3 +142,11 @@ def buscar_usuario(nome):
     return consultar(
         "SELECT id, nome, senha_hash FROM usuarios WHERE nome = %s", (nome,), um=True
     )
+
+
+def atualizar_senha(id, senha_hash):
+    executar("UPDATE usuarios SET senha_hash = %s WHERE id = %s", (senha_hash, id))
+
+
+def atualizar_nome(id, nome):
+    executar("UPDATE usuarios SET nome = %s WHERE id = %s", (nome, id))
