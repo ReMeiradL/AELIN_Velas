@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aelin Velas Aromáticas</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <header class="topo">
+      <div class="wrap barra">
+        <a href="/" class="logo">AELIN<small>Velas aromáticas</small></a>
+        <nav>
+          <a href="/" class="{{ 'ativo' if request.path == '/' }}">Início</a>
+          <a href="/sobre" class="{{ 'ativo' if request.path == '/sobre' }}">Sobre</a>
+          <a href="/velas" class="{{ 'ativo' if request.path == '/velas' }}">Velas</a>
+          <a href="/produtos" class="{{ 'ativo' if request.path == '/produtos' }}">Produtos</a>
+          <a href="/kits" class="{{ 'ativo' if request.path == '/kits' }}">Kits</a>
+          <a href="/aromas" class="{{ 'ativo' if request.path == '/aromas' }}">Aromas</a>
+          <a href="/descontos" class="{{ 'ativo' if request.path == '/descontos' }}">Descontos</a>
+          <a href="/pedido" class="{{ 'ativo' if request.path == '/pedido' }}">Como pedir</a>
+        </nav>
+        <div class="conta">
+          {% if session.usuario %}
+          <a href="/estoque">Estoque</a>
+          <a class="btn peq" href="/logout">Sair</a>
+          {% else %}
+          <a class="btn peq sec" href="/login">Entrar</a>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+
+    {% for mensagem in get_flashed_messages() %}
+    <p class="flash">{{ mensagem }}</p>
+    {% endfor %}
+
+    {% block conteudo %}{% endblock %}
+
+    <footer class="rodape">
+      <b>AELIN VELAS AROMÁTICAS</b><br>
+      Que cada aroma te lembre do que te faz bem. · Feito com carinho para você.
+    </footer>
+  </body>
+</html>

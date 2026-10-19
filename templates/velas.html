@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "_macros.html" import pedir with context %}
+
+{% block conteudo %}
+<section class="secao">
+    <div class="wrap">
+        <h1 class="titulo">Velas aromáticas</h1>
+        <p class="lead">Feitas à mão, com cera vegetal e fragrâncias especiais.</p>
+        <div class="grade g5">
+            {% for v in velas %}
+            <div class="card vela">
+                <div class="peso">{{ v.nome|replace("Vela ", "") }}</div>
+                <div class="preco">{{ v.preco|brl }}</div>
+                {{ pedir(v.nome, v.estoque) }}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="selos">
+            <span>Cera vegetal</span>
+            <span>Pavio de algodão</span>
+            <span>Essências premium e artesanais</span>
+        </div>
+        <div class="foto largo">FOTO CONJUNTO DE VELAS</div>
+        <p class="centro espaco"><a class="btn sec-escuro" href="/aromas">Escolher o aroma</a></p>
+    </div>
+</section>
+{% endblock %}

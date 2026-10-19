@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<section class="login-fundo">
+    <form class="caixa" action="/login" method="POST">
+        <h1>Área do cliente</h1>
+        <p class="nota">Acesse para gerenciar o seu estoque.</p>
+
+        {% if erro %}
+        <p class="erro">{{ erro }}</p>
+        {% endif %}
+
+        <label for="nome">Usuário</label>
+        <input type="text" id="nome" name="nome" value="{{ request.form.nome or '' }}" required>
+
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" required>
+
+        <button class="btn cheio" type="submit">Entrar</button>
+        <p class="nota"><a href="/">← Voltar à loja</a></p>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<section class="secao perg">
+    <div class="wrap">
+        <h1 class="titulo">Descontos progressivos</h1>
+        <p class="lead">Para compras de produtos avulsos em quantidade.</p>
+        <div class="faixas">
+            {% for f in faixas %}
+            <div class="faixa"><b>{{ f.desconto }}</b><span>{{ f.faixa }}</span></div>
+            {% endfor %}
+        </div>
+        <p class="obs">
+            Os descontos são aplicados aos produtos avulsos e não acumulam com o preço promocional dos kits.<br>
+            Pedidos personalizados: valor confirmado conforme produto, quantidade, aroma, embalagem e personalização.
+            Arte exclusiva e embalagens especiais: consulte valores.
+        </p>
+    </div>
+</section>
+{% endblock %}

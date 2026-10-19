@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<section class="secao escura">
+    <div class="wrap">
+        <h1 class="titulo">Aromas disponíveis</h1>
+        <p class="lead">Explore por família olfativa.</p>
+
+        <div class="chips">
+            <a class="chip {{ 'on' if not familia }}" href="/aromas">Todos</a>
+            {% for f in familias %}
+            <a class="chip {{ 'on' if familia == f }}" href="/aromas?familia={{ f|urlencode }}">{{ f }}</a>
+            {% endfor %}
+        </div>
+
+        {% if aromas %}
+        <div class="grade g3">
+            {% for a in aromas %}
+            <div class="card aroma {{ 'indisponivel' if not a.disponivel }}">
+                <h3>{{ a.nome }}</h3>
+                <div class="fam">{{ a.familia }}</div>
+                <p>{{ a.notas }}</p>
+                {% if not a.disponivel %}<span class="tag esgotado">Indisponível</span>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="centro">Nenhum aroma encontrado nessa família.</p>
+        {% endif %}
+
+        <p class="aviso">Consulte disponibilidade antes de escolher.</p>
+    </div>
+</section>
+{% endblock %}

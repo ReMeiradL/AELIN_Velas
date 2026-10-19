@@ -1,0 +1,320 @@
+/* ===== Aelin Velas Aromáticas — estilo ===== */
+
+:root {
+    --verde: #172a21;
+    --verde2: #1f372b;
+    --ouro: #b38a48;
+    --creme: #e9d7b1;
+    --perg: #cfb18c;
+    --perg-claro: #e3cfae;
+    --marrom: #65462e;
+    --ok: #3f7a4f;
+    --alerta: #b8741a;
+    --zero: #a33b2e;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: Georgia, "DejaVu Serif", serif;
+    background: var(--perg-claro);
+    color: var(--marrom);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* a área de conteúdo cresce e empurra o rodapé para o fim da tela */
+.hero, .secao, .login-fundo, .painel { flex: 1 0 auto; }
+.rodape { margin-top: auto; }
+
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { line-height: 1.2; }
+
+.wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+.centro { text-align: center; }
+
+/* ----- topo ----- */
+.topo {
+    background: var(--verde);
+    border-bottom: 1px solid var(--ouro);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.logo { color: var(--ouro); font-size: 26px; letter-spacing: 4px; font-weight: bold; line-height: 1.1; }
+.logo small { display: block; font-size: 10px; letter-spacing: 1px; font-weight: normal; }
+.topo nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.topo nav a { color: var(--creme); font-size: 14px; }
+.topo nav a:hover, .conta > a:hover { color: var(--ouro); }
+.topo nav a.ativo { color: var(--ouro); border-bottom: 2px solid var(--ouro); }
+.conta { display: flex; align-items: center; gap: 14px; color: var(--creme); font-size: 14px; }
+
+/* ----- botões ----- */
+.btn {
+    display: inline-block;
+    background: var(--ouro);
+    color: var(--verde);
+    padding: 10px 22px;
+    border-radius: 30px;
+    border: 1px solid var(--ouro);
+    font: bold 14px Georgia, "DejaVu Serif", serif;
+    cursor: pointer;
+}
+.btn:hover { filter: brightness(1.1); }
+.btn.sec { background: none; color: var(--ouro); }
+.btn.sec-escuro { background: none; color: var(--marrom); border-color: var(--marrom); }
+.btn.peq { padding: 5px 14px; font-size: 13px; }
+.btn.cheio { width: 100%; margin-top: 20px; padding: 12px; }
+.btn.perigo { background: var(--zero); border-color: var(--zero); color: #fff; }
+:focus-visible { outline: 3px solid var(--ouro); outline-offset: 2px; }
+
+/* ----- avisos ----- */
+.flash, .erro {
+    width: calc(100% - 40px);
+    max-width: 1040px;
+    margin: 14px auto;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+.flash { background: var(--creme); border: 1px solid var(--ouro); color: var(--verde); }
+.erro { background: #f1d4cd; border: 1px solid var(--zero); color: var(--zero); }
+
+/* ----- capa ----- */
+.hero {
+    background: var(--verde);
+    color: var(--ouro);
+    text-align: center;
+    padding: 80px 20px 90px;
+    position: relative;
+    overflow: hidden;
+}
+.hero::before, .hero::after { content: "❦"; position: absolute; font-size: 150px; opacity: .12; }
+.hero::before { top: -20px; right: 40px; }
+.hero::after { bottom: -40px; left: 40px; transform: rotate(180deg); }
+.hero h1 { font-size: 54px; letter-spacing: 8px; text-transform: uppercase; }
+.hero h2 { font-size: 16px; letter-spacing: 4px; font-weight: normal; text-transform: uppercase; margin-bottom: 18px; }
+.hero p { color: var(--creme); font-size: 18px; margin-bottom: 8px; }
+.hero .frase { color: var(--ouro); font-style: italic; font-size: 14px; margin-bottom: 26px; }
+.hero .acoes { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.link-claro { color: var(--ouro); font-size: 14px; text-decoration: underline; }
+
+/* ----- seções ----- */
+.secao { padding: 60px 0; }
+.secao.perg { background: var(--perg); }
+.secao.escura { background: var(--verde); color: var(--creme); }
+.titulo { text-align: center; font-size: 30px; letter-spacing: 2px; text-transform: uppercase; }
+.titulo.esq, .lead.esq { text-align: left; }
+.secao.escura .titulo { color: var(--ouro); }
+.lead { text-align: center; font-size: 15px; font-style: italic; margin: 6px 0 32px; font-weight: normal; }
+.subtitulo { margin: 8px 0 14px; font-size: 20px; }
+.subtitulo small { font-weight: normal; font-size: 14px; font-style: italic; margin-left: 6px; }
+.espaco { margin-top: 34px; }
+
+.sobre { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+.sobre p { font-size: 17px; }
+
+/* ----- fotos (espaços reservados) ----- */
+.foto {
+    border: 2px dashed var(--ouro);
+    background: rgba(179, 138, 72, .12);
+    color: var(--ouro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 13px;
+    padding: 10px;
+    min-height: 140px;
+    border-radius: 10px;
+}
+.foto.peq { min-height: 90px; margin-bottom: 4px; }
+.foto.largo { margin-top: 30px; min-height: 200px; }
+.foto.alto { min-height: 260px; }
+.foto img { max-width: 100%; }
+
+/* ----- cartões ----- */
+.grade { display: grid; gap: 20px; }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.g4 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.g5 { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+
+.card {
+    background: var(--perg-claro);
+    border: 1px solid var(--ouro);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+.perg .card { background: var(--creme); }
+.escura .card { background: var(--verde2); color: var(--creme); }
+.card h3 { font-size: 18px; margin-top: 6px; }
+.card .nota { font-size: 13px; }
+.preco { font-size: 22px; font-weight: bold; color: var(--verde); margin: 4px 0 8px; }
+.escura .preco { color: var(--ouro); }
+.card > .foto { align-self: stretch; }
+.card > .btn, .card > .tag { margin-top: auto; }
+
+.vela .peso { font-size: 30px; color: var(--ouro); font-weight: bold; }
+
+a.atalho { transition: transform .15s, box-shadow .15s; }
+a.atalho:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(101, 70, 46, .25); }
+a.atalho h3 { color: var(--verde); }
+
+.tag {
+    display: inline-block;
+    background: var(--ouro);
+    color: var(--verde);
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+.tag.esgotado { background: var(--zero); color: #fff; }
+
+.selos { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 28px; }
+.selos span { border: 1px solid var(--ouro); border-radius: 30px; padding: 6px 16px; font-size: 14px; }
+
+.kit .itens { font-size: 13px; font-weight: bold; }
+
+/* ----- aromas ----- */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 26px; }
+.chip { border: 1px solid var(--ouro); color: var(--creme); padding: 6px 16px; border-radius: 30px; font-size: 13px; }
+.chip:hover { background: rgba(179, 138, 72, .25); }
+.chip.on { background: var(--ouro); color: var(--verde); }
+.aroma { align-items: flex-start; text-align: left; }
+.aroma h3 { color: var(--ouro); font-size: 16px; margin-top: 0; }
+.aroma .fam { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; opacity: .8; }
+.aroma p { font-size: 13px; }
+.aroma.indisponivel { opacity: .6; }
+.aviso { text-align: center; margin-top: 22px; font-size: 14px; font-style: italic; }
+
+/* ----- descontos ----- */
+.faixas { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; }
+.faixa { background: var(--verde); color: var(--creme); border-radius: 14px; padding: 18px; text-align: center; }
+.faixa b { display: block; font-size: 22px; color: var(--ouro); margin-bottom: 4px; }
+.faixa span { font-size: 13px; }
+.obs { font-size: 13px; text-align: center; margin-top: 20px; }
+
+/* ----- como pedir ----- */
+.passos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; counter-reset: p; margin-top: 30px; }
+.passo { text-align: center; padding: 20px; }
+.passo::before { counter-increment: p; content: "0" counter(p); display: block; font-size: 40px; color: var(--ouro); font-weight: bold; }
+.contato { text-align: center; margin: 34px 0 14px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ----- rodapé ----- */
+.rodape { background: var(--verde); color: var(--creme); text-align: center; padding: 34px 20px; font-size: 14px; }
+.rodape b { color: var(--ouro); letter-spacing: 3px; }
+
+/* ----- login e formulários ----- */
+.login-fundo {
+    background: var(--verde);
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+.caixa, .caixa-form {
+    background: var(--perg-claro);
+    border: 1px solid var(--ouro);
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 400px;
+}
+.caixa h1 { text-align: center; font-size: 22px; }
+.caixa .nota { text-align: center; font-size: 13px; font-style: italic; margin-top: 4px; }
+.caixa .nota a { text-decoration: underline; }
+.caixa-form { margin: 0 auto; max-width: 460px; }
+.caixa-form h1 { font-size: 22px; margin-bottom: 6px; }
+.botoes { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+
+label { display: block; font-size: 13px; margin: 14px 0 4px; }
+input, select {
+    font: inherit;
+    padding: 10px 12px;
+    border: 1px solid var(--ouro);
+    border-radius: 8px;
+    background: var(--creme);
+    color: var(--marrom);
+    width: 100%;
+}
+
+/* ----- painel de estoque ----- */
+.painel { padding-top: 28px; padding-bottom: 60px; }
+.painel h1 { font-size: 26px; }
+.sub { font-size: 14px; font-style: italic; margin: 2px 0 22px; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 26px; }
+.kpi { background: var(--verde); color: var(--creme); border-radius: 14px; padding: 16px; border-left: 4px solid var(--ouro); }
+.kpi b { display: block; font-size: 30px; color: var(--ouro); }
+.kpi span { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+.kpi.baixo { border-left-color: var(--alerta); }
+.kpi.zero { border-left-color: var(--zero); }
+
+.abas { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.aba { border: 1px solid var(--marrom); padding: 7px 18px; border-radius: 30px; font-size: 14px; }
+.aba.on { background: var(--marrom); color: var(--creme); }
+
+.ferramentas { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
+.ferramentas input { max-width: 280px; }
+.ferramentas select { max-width: 220px; }
+.ferramentas input, .ferramentas select { flex: 1 1 160px; }
+
+.tabela-wrap { background: var(--creme); border: 1px solid var(--ouro); border-radius: 14px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }
+th { background: var(--verde); color: var(--ouro); text-align: left; padding: 12px 14px; font-weight: normal; letter-spacing: 1px; font-size: 12px; text-transform: uppercase; }
+td { padding: 10px 14px; border-top: 1px solid rgba(179, 138, 72, .4); font-variant-numeric: tabular-nums; }
+td.acoes { white-space: nowrap; }
+td.acoes a { text-decoration: underline; margin-right: 12px; font-size: 13px; }
+
+.qt { display: inline-flex; align-items: center; gap: 8px; }
+.qt button {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid var(--marrom); background: none; color: var(--marrom);
+    cursor: pointer; font-size: 16px; line-height: 1;
+}
+.qt button:hover { background: var(--marrom); color: var(--creme); }
+.qt span { min-width: 30px; text-align: center; font-weight: bold; font-size: 16px; }
+
+.st { display: inline-block; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 20px; color: #fff; }
+.st.ok { background: var(--ok); }
+.st.baixo { background: var(--alerta); }
+.st.zero { background: var(--zero); }
+
+.pilula { border: 0; border-radius: 20px; padding: 4px 14px; font: bold 12px Georgia, "DejaVu Serif", serif; color: #fff; cursor: pointer; }
+.pilula.ligado { background: var(--ok); }
+.pilula.desligado { background: #8d7d62; }
+
+.nota { font-size: 12px; margin-top: 12px; font-style: italic; }
+.vazio { padding: 20px; text-align: center; }
+
+/* ----- celular ----- */
+@media (max-width: 720px) {
+    .sobre { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 38px; }
+    .barra { justify-content: center; }
+    .topo nav { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}

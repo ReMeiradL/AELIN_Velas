@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<section class="secao">
+    <div class="wrap">
+        <h1 class="titulo">Como fazer seu pedido</h1>
+        <div class="passos">
+            <div class="passo">Escolha seus produtos ou kits favoritos.</div>
+            <div class="passo">Entre em contato pelo WhatsApp ou Instagram.</div>
+            <div class="passo">Confirme os itens, endereço e forma de pagamento.</div>
+            <div class="passo">Receba seu pedido preparado com todo o carinho!</div>
+        </div>
+        <p class="contato">
+            <a class="btn" href="https://wa.me/{{ whatsapp }}">WhatsApp (83) 99135-8966</a>
+            <a class="btn sec-escuro" href="https://instagram.com/{{ instagram }}">Instagram @{{ instagram }}</a>
+        </p>
+        <p class="centro">Obrigada por apoiar a Aelin!</p>
+    </div>
+</section>
+{% endblock %}

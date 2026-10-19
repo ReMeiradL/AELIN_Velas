@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% from "_macros.html" import status %}
+
+{% block conteudo %}
+<main class="wrap painel">
+    <h1>Estoque</h1>
+    <p class="sub">Controle as quantidades e a disponibilidade dos aromas exibida na loja.</p>
+
+    <div class="kpis">
+        <div class="kpi"><b>{{ resumo.itens }}</b><span>Produtos e kits</span></div>
+        <div class="kpi"><b>{{ resumo.unidades }}</b><span>Unidades em estoque</span></div>
+        <div class="kpi baixo"><b>{{ resumo.baixos }}</b><span>Estoque baixo</span></div>
+        <div class="kpi zero"><b>{{ resumo.esgotados }}</b><span>Esgotados</span></div>
+    </div>
+
+    <nav class="abas">
+        <a class="aba {{ 'on' if aba == 'produtos' }}" href="/estoque">Produtos</a>
+        <a class="aba {{ 'on' if aba == 'kits' }}" href="/estoque/kits">Kits</a>
+        <a class="aba {{ 'on' if aba == 'aromas' }}" href="/estoque/aromas">Aromas</a>
+    </nav>
+
+    {% if aba == "produtos" %}
+    <form class="ferramentas" action="/estoque" method="GET">
+        <input type="text" name="busca" value="{{ busca }}" placeholder="Buscar item…" aria-label="Buscar item">
+        <select name="categoria" aria-label="Categoria">
+            <option value="">Todas as categorias</option>
+            {% for c in categorias %}
+            <option value="{{ c.id }}" {{ 'selected' if categoria_id == c.id }}>{{ c.nome }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn peq" type="submit">Filtrar</button>
+        <a class="btn peq sec-escuro" href="/estoque/novo">+ Novo item</a>
+    </form>
+
+    {% if produtos %}
+    <div class="tabela-wrap">
+        <table>
+            <tr><th>Produto</th><th>Categoria</th><th>Preço</th><th>Quantidade</th><th>Status</th><th></th></tr>
+            {% for p in produtos %}
+            <tr>
+                <td>{{ p.nome }}</td>
+                <td>{{ p.categoria }}</td>
+                <td>{{ p.preco|brl }}</td>
+                <td>
+                    <form class="qt" action="/estoque/produtos/{{ p.id }}/ajustar" method="POST">
+                        <button name="delta" value="-1" aria-label="Diminuir">−</button>
+                        <span>{{ p.estoque }}</span>
+                        <button name="delta" value="1" aria-label="Aumentar">+</button>
+                    </form>
+                </td>
+                <td>{{ status(p.estoque, limite) }}</td>
+                <td class="acoes">
+                    <a href="/estoque/{{ p.id }}/editar">Editar</a>
+                    <a href="/estoque/{{ p.id }}/excluir">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+    <p class="vazio">Nenhum produto encontrado.</p>
+    {% endif %}
+    <p class="nota">As quantidades dos produtos definem o que aparece como “Esgotado” na loja.</p>
+
+    {% elif aba == "kits" %}
+    <div class="tabela-wrap">
+        <table>
+            <tr><th>Kit</th><th>Itens</th><th>Preço</th><th>Quantidade</th><th>Status</th></tr>
+            {% for k in kits %}
+            <tr>
+                <td>{{ k.nome }}</td>
+                <td>{{ k.itens }}</td>
+                <td>{{ k.preco|brl }}</td>
+                <td>
+                    <form class="qt" action="/estoque/kits/{{ k.id }}/ajustar" method="POST">
+                        <button name="delta" value="-1" aria-label="Diminuir">−</button>
+                        <span>{{ k.estoque }}</span>
+                        <button name="delta" value="1" aria-label="Aumentar">+</button>
+                    </form>
+                </td>
+                <td>{{ status(k.estoque, limite) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% else %}
+    <div class="tabela-wrap">
+        <table>
+            <tr><th>Aroma</th><th>Família olfativa</th><th>Na loja</th></tr>
+            {% for a in aromas %}
+            <tr>
+                <td>{{ a.nome }}</td>
+                <td>{{ a.familia }}</td>
+                <td>
+                    <form action="/estoque/aromas/{{ a.id }}/alternar" method="POST">
+                        <button class="pilula {{ 'ligado' if a.disponivel else 'desligado' }}" type="submit">
+                            {{ 'Disponível' if a.disponivel else 'Indisponível' }}
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <p class="nota">Aromas indisponíveis aparecem marcados no catálogo da loja.</p>
+    {% endif %}
+</main>
+{% endblock %}

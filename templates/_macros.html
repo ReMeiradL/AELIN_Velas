@@ -1,0 +1,19 @@
+{# Botão de pedido pelo WhatsApp; mostra "Esgotado" quando não há estoque. #}
+{% macro pedir(nome, estoque) -%}
+{% if estoque > 0 -%}
+<a class="btn" href="https://wa.me/{{ whatsapp }}?text={{ ('Olá! Quero pedir: ' ~ nome)|urlencode }}">Pedir</a>
+{%- else -%}
+<span class="tag esgotado">Esgotado</span>
+{%- endif %}
+{%- endmacro %}
+
+{# Selo de status do estoque, usado no painel. #}
+{% macro status(estoque, limite) -%}
+{% if estoque == 0 -%}
+<span class="st zero">Esgotado</span>
+{%- elif estoque <= limite -%}
+<span class="st baixo">Baixo</span>
+{%- else -%}
+<span class="st ok">Ok</span>
+{%- endif %}
+{%- endmacro %}

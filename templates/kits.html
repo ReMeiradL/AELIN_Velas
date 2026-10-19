@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "_macros.html" import pedir with context %}
+
+{% block conteudo %}
+<section class="secao escura">
+    <div class="wrap">
+        <h1 class="titulo">Kits Aelin</h1>
+        <p class="lead">Mais aromas, mais bem-estar, mais vantagem para você. Combinações especiais para presentear ou experimentar.</p>
+        <div class="grade g3">
+            {% for k in kits %}
+            <div class="card kit">
+                {# Para usar uma foto real: <img src="/static/img/arquivo.jpg" alt="{{ k.nome }}"> #}
+                <div class="foto">FOTO DO KIT</div>
+                <h3>{{ k.nome }}</h3>
+                <div class="itens">{{ k.itens }}</div>
+                <p class="nota">{{ k.descricao }}</p>
+                <div class="preco">{{ k.preco|brl }}</div>
+                {{ pedir(k.nome, k.estoque) }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

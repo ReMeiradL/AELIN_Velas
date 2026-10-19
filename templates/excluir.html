@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<main class="wrap painel">
+    <form class="caixa-form" action="/estoque/{{ produto.id }}/excluir" method="POST">
+        <h1>Excluir item</h1>
+        <p>Tem certeza que deseja excluir <b>{{ produto.nome }}</b>? Essa ação não pode ser desfeita.</p>
+        <p class="botoes">
+            <button class="btn perigo" type="submit">Sim, excluir</button>
+            <a class="btn sec-escuro" href="/estoque">Cancelar</a>
+        </p>
+    </form>
+</main>
+{% endblock %}

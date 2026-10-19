@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<main class="wrap painel">
+    <form class="caixa-form" action="{{ acao }}" method="POST">
+        <h1>{{ titulo }}</h1>
+
+        {% if erro %}
+        <p class="erro">{{ erro }}</p>
+        {% endif %}
+
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" value="{{ valores.nome }}" required>
+
+        <label for="categoria_id">Categoria</label>
+        <select id="categoria_id" name="categoria_id" required>
+            <option value="">Escolha…</option>
+            {% for c in categorias %}
+            <option value="{{ c.id }}" {{ 'selected' if valores.categoria_id|string == c.id|string }}>{{ c.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="preco">Preço (deixe vazio para mostrar “consulte”)</label>
+        <input type="text" id="preco" name="preco" value="{{ valores.preco }}" placeholder="24,90" inputmode="decimal">
+
+        <label for="estoque">Quantidade em estoque</label>
+        <input type="number" id="estoque" name="estoque" min="0" value="{{ valores.estoque }}" required>
+
+        <p class="botoes">
+            <button class="btn" type="submit">Salvar</button>
+            <a class="btn sec-escuro" href="/estoque">Cancelar</a>
+        </p>
+    </form>
+</main>
+{% endblock %}
