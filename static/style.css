@@ -195,6 +195,7 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 
 /* páginas Sobre e Produtos: dourado escuro em poucos pontos de destaque */
 .dourado .lead, .dourado .subtitulo, .dourado .preco, .ouro { color: var(--ouro-texto); }
+.dourado a.atalho h3 { color: var(--ouro-texto); }
 .dourado .subtitulo small { color: var(--suave); }
 .ouro { font-style: italic; }
 
