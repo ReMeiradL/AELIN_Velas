@@ -11,6 +11,7 @@
     --ouro: #c9a14a;       /* dourado, só nos detalhes da vela da capa */
     --ouro-claro: #ecd48f;
     --ouro-escuro: #8c6a24;
+    --ouro-texto: #7d5c12; /* dourado escuro para texto sobre fundo claro */
     --suave: #56605a;      /* texto secundário */
     --linha: #c6cbbd;
     --ok: #3f7a4f;
@@ -68,7 +69,7 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 .topo nav a:hover { border-bottom-color: var(--linha); }
 .topo nav a.ativo { border-bottom-color: var(--chama); font-weight: 600; }
 .conta { display: flex; align-items: center; gap: 14px; font-size: 15px; }
-.conta > a:hover { color: var(--chama-escura); }
+.conta > a:hover { color: var(--ouro-texto); }
 
 /* ----- botões ----- */
 .btn {
@@ -115,7 +116,7 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 }
 .hero-texto { min-width: 0; }
 .hero h1 { font-size: 88px; font-weight: 500; letter-spacing: -1px; line-height: 1; }
-.hero h2 { font-size: 22px; font-weight: 400; font-style: italic; color: var(--chama); margin: 6px 0 26px; }
+.hero h2 { font-size: 22px; font-weight: 400; font-style: italic; color: var(--ouro); margin: 6px 0 26px; }
 .hero p { font-size: 18px; margin-bottom: 8px; max-width: 34em; }
 .hero .frase { color: #b9c2b5; margin-bottom: 28px; }
 .hero .acoes { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
@@ -123,7 +124,7 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 .hero .btn:hover { background: #f09a3c; }
 .hero .btn.sec { background: none; color: var(--papel); border-color: #6c7a71; }
 .hero .btn.sec:hover { background: var(--tinta2); }
-.link-claro { color: var(--chama); font-size: 15px; text-decoration: underline; text-underline-offset: 3px; }
+.link-claro { color: var(--ouro); font-size: 15px; text-decoration: underline; text-underline-offset: 3px; }
 
 /* a vela da capa: a única animação do site */
 .vela-hero { position: relative; width: 120px; height: 300px; justify-self: center; }
@@ -137,15 +138,25 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
     background: #e6e4d6; border-radius: 50%;
     transform: translateY(-50%);
 }
-/* faixa dourada no corpo da vela, com um filete fino de cada lado */
+/* faixa dourada em espiral ao redor da vela, com brilhos e sombra lateral de cilindro */
 .vela-hero .cera::after {
-    content: ""; position: absolute; top: 74px; left: 0; right: 0; height: 40px;
+    content: ""; position: absolute; top: 12px; left: 0; right: 0; bottom: 0;
+    border-radius: 0 0 4px 4px;
     background:
-        linear-gradient(90deg, rgba(0, 0, 0, .22) 0%, rgba(255, 255, 255, .28) 35%, rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, .25) 100%),
-        linear-gradient(180deg, var(--ouro-claro), var(--ouro) 50%, var(--ouro-escuro));
-    border-top: 1px solid var(--ouro-escuro);
-    border-bottom: 1px solid var(--ouro-escuro);
-    box-shadow: 0 -5px 0 -4px var(--ouro), 0 5px 0 -4px var(--ouro);
+        radial-gradient(circle, #fff 0 1px, rgba(255, 244, 207, .7) 1.5px, transparent 4px) 24px 38px / 12px 12px no-repeat,
+        radial-gradient(circle, #fff 0 1px, rgba(255, 244, 207, .7) 1.5px, transparent 4px) 86px 70px / 12px 12px no-repeat,
+        radial-gradient(circle, #fff 0 1px, rgba(255, 244, 207, .7) 1.5px, transparent 4px) 52px 112px / 12px 12px no-repeat,
+        radial-gradient(circle, #fff 0 1px, rgba(255, 244, 207, .7) 1.5px, transparent 4px) 94px 150px / 12px 12px no-repeat,
+        linear-gradient(90deg, rgba(0, 0, 0, .18) 0%, rgba(255, 255, 255, .12) 35%, rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, .22) 100%),
+        repeating-linear-gradient(
+            162deg,
+            transparent 0 22px,
+            var(--ouro-escuro) 22px 23px,
+            var(--ouro-claro) 23px 26px,
+            var(--ouro) 26px 29px,
+            var(--ouro-escuro) 29px 31px,
+            transparent 31px 52px
+        );
 }
 /* pires dourado sob a vela */
 .vela-hero::after {
@@ -175,7 +186,7 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 .secao.escura { background: var(--tinta); color: var(--papel); }
 .titulo { text-align: left; font-size: 34px; }
 .titulo.esq, .lead.esq { text-align: left; }
-.secao.escura .titulo { color: var(--chama); }
+.secao.escura .titulo { color: var(--ouro); }
 .lead { text-align: left; font-size: 17px; color: var(--suave); margin: 8px 0 32px; max-width: 40em; }
 .secao.escura .lead { color: #b9c2b5; }
 .subtitulo { margin: 8px 0 14px; font-size: 22px; }
@@ -229,11 +240,11 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 .card .nota { font-size: 14px; color: var(--suave); font-style: normal; margin-top: 0; }
 .escura .card .nota { color: #b9c2b5; }
 .preco { font-family: var(--titulo); font-size: 24px; font-weight: 600; margin: 4px 0 8px; }
-.escura .preco { color: var(--chama); }
+.escura .preco { color: var(--ouro); }
 .card > .foto { align-self: stretch; }
 .card > .btn, .card > .tag { margin-top: auto; }
 
-.vela .peso { font-family: var(--titulo); font-size: 34px; color: var(--chama-escura); font-weight: 600; }
+.vela .peso { font-family: var(--titulo); font-size: 34px; color: var(--ouro-texto); font-weight: 600; }
 
 a.atalho:hover { border-top-color: var(--chama); }
 a.atalho:hover h3 { text-decoration: underline; text-decoration-color: var(--chama); text-underline-offset: 4px; }
@@ -259,7 +270,7 @@ a.atalho:hover h3 { text-decoration: underline; text-decoration-color: var(--cha
 .chip { border: 1px solid #6c7a71; color: var(--papel); padding: 5px 14px; border-radius: 30px; font-size: 14px; }
 .chip:hover { background: var(--tinta2); }
 .chip.on { background: var(--chama); border-color: var(--chama); color: var(--tinta); }
-.aroma h3 { color: var(--chama); font-size: 19px; margin-top: 0; }
+.aroma h3 { color: var(--ouro); font-size: 19px; margin-top: 0; }
 .aroma .fam { font-size: 13px; font-style: italic; color: #b9c2b5; }
 .aroma p { font-size: 14px; }
 .aroma.indisponivel { opacity: .6; }
@@ -269,14 +280,14 @@ a.atalho:hover h3 { text-decoration: underline; text-decoration-color: var(--cha
 /* ----- descontos ----- */
 .faixas { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; }
 .faixa { background: var(--tinta); color: var(--papel); border-radius: 6px; padding: 18px; }
-.faixa b { display: block; font-family: var(--titulo); font-size: 26px; color: var(--chama); margin-bottom: 4px; }
+.faixa b { display: block; font-family: var(--titulo); font-size: 26px; color: var(--ouro); margin-bottom: 4px; }
 .faixa span { font-size: 14px; }
 .obs { font-size: 14px; color: var(--suave); margin-top: 20px; }
 
 /* ----- como pedir ----- */
 .passos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; counter-reset: p; margin-top: 30px; }
 .passo { padding: 4px 0 0; }
-.passo::before { counter-increment: p; content: counter(p); display: block; font-family: var(--titulo); font-size: 44px; line-height: 1; color: var(--chama-escura); margin-bottom: 6px; }
+.passo::before { counter-increment: p; content: counter(p); display: block; font-family: var(--titulo); font-size: 44px; line-height: 1; color: var(--ouro-texto); margin-bottom: 6px; }
 .contato { margin: 34px 0 14px; display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* ----- rodapé ----- */
@@ -358,7 +369,7 @@ td { padding: 10px 14px; border-top: 1px solid var(--linha); font-variant-numeri
 tbody tr:first-child td { border-top: 0; }
 td.acoes { white-space: nowrap; }
 td.acoes a { text-decoration: underline; text-underline-offset: 3px; margin-right: 12px; font-size: 14px; }
-td.acoes a:hover { color: var(--chama-escura); }
+td.acoes a:hover { color: var(--ouro-texto); }
 
 .qt { display: inline-flex; align-items: center; gap: 8px; }
 .qt button {
