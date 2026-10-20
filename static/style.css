@@ -8,6 +8,9 @@
     --folha: #5f7a68;      /* eucalipto */
     --chama: #e38b2c;      /* amarelo-âmbar da chama */
     --chama-escura: #9c520f; /* o mesmo âmbar, legível sobre fundo claro */
+    --ouro: #c9a14a;       /* dourado, só nos detalhes da vela da capa */
+    --ouro-claro: #ecd48f;
+    --ouro-escuro: #8c6a24;
     --suave: #56605a;      /* texto secundário */
     --linha: #c6cbbd;
     --ok: #3f7a4f;
@@ -133,6 +136,23 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
     content: ""; position: absolute; top: 0; left: 0; right: 0; height: 20px;
     background: #e6e4d6; border-radius: 50%;
     transform: translateY(-50%);
+}
+/* faixa dourada no corpo da vela, com um filete fino de cada lado */
+.vela-hero .cera::after {
+    content: ""; position: absolute; top: 74px; left: 0; right: 0; height: 40px;
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, .22) 0%, rgba(255, 255, 255, .28) 35%, rgba(255, 255, 255, 0) 60%, rgba(0, 0, 0, .25) 100%),
+        linear-gradient(180deg, var(--ouro-claro), var(--ouro) 50%, var(--ouro-escuro));
+    border-top: 1px solid var(--ouro-escuro);
+    border-bottom: 1px solid var(--ouro-escuro);
+    box-shadow: 0 -5px 0 -4px var(--ouro), 0 5px 0 -4px var(--ouro);
+}
+/* pires dourado sob a vela */
+.vela-hero::after {
+    content: ""; position: absolute; bottom: -10px; left: -22px; right: -22px; height: 14px;
+    background: linear-gradient(180deg, var(--ouro-claro), var(--ouro) 45%, var(--ouro-escuro));
+    border-radius: 50%;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, .45);
 }
 .vela-hero .pavio { position: absolute; bottom: 188px; left: 50%; width: 3px; height: 26px; margin-left: -1.5px; background: #0d120f; border-radius: 2px; }
 .vela-hero .chama {
