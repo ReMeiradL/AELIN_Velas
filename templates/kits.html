@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import pedir with context %}
+{% from "_macros.html" import pedir, foto with context %}
 
 {% block conteudo %}
 <section class="secao escura">
@@ -9,8 +9,7 @@
         <div class="grade g3">
             {% for k in kits %}
             <div class="card kit">
-                {# Para usar uma foto real: <img src="/static/img/arquivo.jpg" alt="{{ k.nome }}"> #}
-                <div class="foto">FOTO DO KIT</div>
+                {{ foto(k.imagem, k.nome, "", "FOTO DO KIT") }}
                 <h3>{{ k.nome }}</h3>
                 <div class="itens">{{ k.itens }}</div>
                 <p class="nota">{{ k.descricao }}</p>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import pedir with context %}
+{% from "_macros.html" import pedir, foto with context %}
 
 {% block conteudo %}
 <section class="secao perg dourado">
@@ -11,7 +11,7 @@
         <div class="grade g4">
             {% for p in flores %}
             <div class="card">
-                <div class="foto peq">foto</div>
+                {{ foto(p.imagem, p.nome, "retrato") }}
                 <h3>{{ p.nome }}</h3>
                 <div class="preco">{{ p.preco|brl }}</div>
                 {{ pedir(p.nome, p.estoque) }}
@@ -23,7 +23,7 @@
         <div class="grade g3">
             {% for p in aromatizadores %}
             <div class="card">
-                <div class="foto peq">foto</div>
+                {{ foto(p.imagem, p.nome, "retrato") }}
                 <h3>{{ p.nome }}</h3>
                 <div class="preco">{{ p.preco|brl }}</div>
                 {{ pedir(p.nome, p.estoque) }}
@@ -34,6 +34,7 @@
         <div class="grade g3 espaco">
             {% for p in outros %}
             <div class="card">
+                {{ foto(p.imagem, p.nome, "retrato") }}
                 <span class="tag">{{ p.categoria }}</span>
                 <h3>{{ p.nome }}</h3>
                 <p class="nota">{{ p.descricao }}</p>

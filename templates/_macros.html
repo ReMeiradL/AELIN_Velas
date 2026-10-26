@@ -7,6 +7,15 @@
 {%- endif %}
 {%- endmacro %}
 
+{# Foto do item; sem imagem cadastrada, mostra o quadro tracejado. #}
+{% macro foto(imagem, alt, classe="", texto="foto") -%}
+{% if imagem -%}
+<img class="foto-img {{ classe }}" src="{{ url_for('static', filename='img/' ~ imagem) }}" alt="{{ alt }}" loading="lazy">
+{%- else -%}
+<div class="foto {{ classe }}">{{ texto }}</div>
+{%- endif %}
+{%- endmacro %}
+
 {# Selo de status do estoque, usado no painel. #}
 {% macro status(estoque, limite) -%}
 {% if estoque == 0 -%}

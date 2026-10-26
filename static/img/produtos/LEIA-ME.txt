@@ -1,0 +1,11 @@
+Fotos de produtos e kits
+========================
+
+Coloque aqui as fotos (.jpg, .jpeg, .png ou .webp).
+Depois, no painel (Minha conta > Estoque), escolha a foto de cada item.
+
+Dicas:
+- Nomes simples, em minúsculas, sem acento nem espaço: flor-rosa.jpg, kit-ritual.jpg
+- Largura entre 800 e 1200 px e menos de 200 KB (o site fica mais rápido).
+- Prefira o formato 4:3 (horizontal): o site corta as fotos nessa proporção.
+- Depois de colocar fotos novas, faça commit e push para elas irem ao ar.

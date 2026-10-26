@@ -2,7 +2,7 @@
 
 {% block conteudo %}
 <section class="secao perg dourado">
-    <div class="wrap sobre">
+    <div class="wrap sobre com-montagem">
         <div>
             <h1 class="titulo esq">Sobre Aelin</h1>
             <h2 class="lead esq">Aromas que acolhem, inspiram e conectam.</h2>
@@ -10,7 +10,15 @@
                 através do poder dos aromas. Cada produto é criado de forma <span class="ouro">artesanal</span>,
                 com muito carinho, para despertar sensações, memórias e <span class="ouro">bem-estar</span>.</p>
         </div>
-        <div class="foto alto">FOTO DA MARCA / BASTIDORES</div>
+        <div class="montagem">
+            {# Vídeo sem som, em repetição; "muted" e "playsinline" são exigidos pelos celulares para tocar sozinho. #}
+            <video autoplay muted loop playsinline preload="metadata" disablepictureinpicture
+                   aria-label="Vídeo da marca Aelin">
+                <source src="{{ url_for('static', filename='img/marca_vela.mp4') }}" type="video/mp4">
+            </video>
+            <img src="{{ url_for('static', filename='img/montagem_sobre_site.jpg') }}"
+                 alt="Montagem de fotos da banca da Aelin em uma feira: home sprays, velas em potes, flores aromáticas em cones de papel e o banner da marca"
+                 width="1200" height="1200" loading="lazy"></div>
     </div>
 </section>
 {% endblock %}

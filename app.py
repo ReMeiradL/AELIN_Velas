@@ -303,6 +303,39 @@ def aroma_alternar(id):
     return redirect("/conta/estoque/aromas")
 
 
+# ---------- fotos dos produtos e kits ----------
+
+EXTENSOES_IMAGEM = (".jpg", ".jpeg", ".png", ".webp")
+
+
+def listar_imagens():
+    """Fotos que estão em static/img/produtos, no formato 'produtos/arquivo.jpg'."""
+    pasta = os.path.join(app.static_folder, "img", "produtos")
+    if not os.path.isdir(pasta):
+        return []
+    return [
+        "produtos/" + nome
+        for nome in sorted(os.listdir(pasta))
+        if nome.lower().endswith(EXTENSOES_IMAGEM)
+    ]
+
+
+app.jinja_env.globals["listar_imagens"] = listar_imagens
+
+
+def imagem_valida(nome):
+    """Só aceita um arquivo que realmente está na pasta; qualquer outro valor vira 'sem foto'."""
+    return nome if nome in listar_imagens() else None
+
+
+@app.route("/conta/estoque/kits/<int:id>/imagem", methods=["POST"])
+@login_required
+def kit_imagem(id):
+    banco.atualizar_imagem_kit(id, imagem_valida(request.form.get("imagem", "").strip()))
+    flash("Foto do kit atualizada!")
+    return redirect("/conta/estoque/kits")
+
+
 # ---------- cadastro de produtos ----------
 
 def ler_formulario_produto():
@@ -312,6 +345,7 @@ def ler_formulario_produto():
         "categoria_id": request.form["categoria_id"],
         "preco": request.form["preco"].strip(),
         "estoque": request.form["estoque"].strip(),
+        "imagem": request.form.get("imagem", "").strip(),
     }
 
     if not valores["nome"]:
@@ -338,14 +372,14 @@ def ler_formulario_produto():
     if estoque < 0:
         return valores, None, "O estoque não pode ser negativo."
 
-    return valores, (valores["nome"], categoria_id, preco, estoque), None
+    return valores, (valores["nome"], categoria_id, preco, estoque, imagem_valida(valores["imagem"])), None
 
 
 @app.route("/conta/estoque/novo", methods=["GET", "POST"])
 @login_required
 def produto_novo():
     categorias = banco.listar_categorias()
-    valores = {"nome": "", "categoria_id": "", "preco": "", "estoque": "0"}
+    valores = {"nome": "", "categoria_id": "", "preco": "", "estoque": "0", "imagem": ""}
 
     if request.method == "POST":
         valores, dados, erro = ler_formulario_produto()
@@ -384,6 +418,7 @@ def produto_editar(id):
         "categoria_id": str(produto["categoria_id"]),
         "preco": "" if produto["preco"] is None else str(produto["preco"]).replace(".", ","),
         "estoque": str(produto["estoque"]),
+        "imagem": produto["imagem"] or "",
     }
     return render_template("produto_form.html", titulo="Editar item", acao=acao,
                            categorias=categorias, valores=valores)

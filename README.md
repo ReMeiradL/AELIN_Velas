@@ -53,7 +53,11 @@ AELIN/
 
 - **Quantidades:** o banco começa com 10 unidades de cada item (`ESTOQUE_INICIAL` em `criar_banco.py`). Corrija no painel.
 - **Preços em "consulte":** Tulipa, Margarida e Wax melt estão sem preço no catálogo. Edite pelo painel.
-- **Fotos:** os quadros tracejados são espaços reservados. Coloque as imagens em `static/img/` e troque
-  o quadro por `<img src="/static/img/arquivo.jpg" alt="...">`.
+- **Fotos de produtos e kits:** coloque os arquivos (`.jpg`, `.png` ou `.webp`) em `static/img/produtos/`.
+  No painel (Minha conta > Estoque), escolha a foto de cada produto (Editar) e de cada kit (aba Kits).
+  Itens sem foto continuam mostrando o quadro tracejado. Foto nova precisa de commit e push para ir ao ar.
+- **Página Sobre:** usa `static/img/marca_vela.mp4` (vídeo sem som, em repetição) e
+  `static/img/montagem_sobre_site.jpg`. Para trocar, substitua os arquivos mantendo os nomes.
+- **Foto de conjunto na página Velas:** ainda é um quadro tracejado, fixo em `templates/velas.html`.
 - **Antes de publicar:** troque `app.run(debug=True)` por um servidor de produção (por exemplo Gunicorn),
   use uma `SECRET_KEY` nova e uma senha forte para o admin.

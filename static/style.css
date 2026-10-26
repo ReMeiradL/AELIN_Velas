@@ -205,6 +205,12 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 
 .sobre { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 .sobre p { font-size: 17px; max-width: 34em; }
+.sobre.com-montagem { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
+
+/* vídeo vertical (464x832) ao lado de imagem quadrada: as colunas seguem as proporções, então os dois ficam com a mesma altura */
+.montagem { display: grid; grid-template-columns: 464fr 832fr; gap: 12px; align-items: stretch; }
+.montagem video, .montagem img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 4px; background: var(--papel2); }
+.montagem video { aspect-ratio: 464 / 832; }
 
 /* ----- fotos (espaços reservados) ----- */
 .foto {
@@ -225,6 +231,13 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 .foto.largo { margin-top: 30px; min-height: 200px; }
 .foto.alto { min-height: 260px; }
 .foto img { max-width: 100%; }
+
+/* fotos reais de produtos e kits: formato 4:3, cortadas ao centro */
+.foto-img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; background: var(--papel2); }
+
+/* produtos: fotos verticais 3:4 (a foto e o quadro de espera têm o mesmo formato, então a grade não "pula" ao entrar uma foto) */
+.foto-img.retrato { aspect-ratio: 3 / 4; }
+.foto.retrato { aspect-ratio: 3 / 4; min-height: 0; margin-bottom: 0; }
 
 /* ----- cartões ----- */
 .grade { display: grid; gap: 20px; }
@@ -251,7 +264,7 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 .escura .card .nota { color: #b9c2b5; }
 .preco { font-family: var(--titulo); font-size: 24px; font-weight: 600; margin: 4px 0 8px; }
 .escura .preco { color: var(--ouro); }
-.card > .foto { align-self: stretch; }
+.card > .foto, .card > .foto-img { align-self: stretch; }
 .card > .btn, .card > .tag { margin-top: auto; }
 
 .vela .peso { font-family: var(--titulo); font-size: 34px; color: var(--ouro-texto); font-weight: 600; }
@@ -400,11 +413,13 @@ td.acoes a:hover { color: var(--ouro-texto); }
 .pilula.desligado { background: #757d71; }
 
 .nota { font-size: 13px; margin-top: 12px; color: var(--suave); }
+.foto-form { display: flex; gap: 6px; align-items: center; }
+.foto-form select { min-width: 150px; padding: 5px 8px; }
 .vazio { padding: 20px; text-align: center; }
 
 /* ----- celular ----- */
 @media (max-width: 720px) {
-    .sobre { grid-template-columns: 1fr; }
+    .sobre, .sobre.com-montagem { grid-template-columns: minmax(0, 1fr); }
     .hero { grid-template-columns: minmax(0, 1fr); padding: 48px 20px 56px; }
     .hero h1 { font-size: 64px; }
     .vela-hero { transform: scale(.7); transform-origin: 0 100%; justify-self: start; height: 210px; width: 84px; }

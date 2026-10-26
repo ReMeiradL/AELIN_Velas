@@ -41,7 +41,7 @@ def listar_categorias():
 
 def listar_produtos(busca="", categoria_id=None):
     sql = """
-        SELECT p.id, p.nome, p.descricao, p.preco, p.estoque,
+        SELECT p.id, p.nome, p.descricao, p.preco, p.estoque, p.imagem,
                c.id AS categoria_id, c.nome AS categoria
         FROM produtos p
         JOIN categorias c ON c.id = p.categoria_id
@@ -57,23 +57,23 @@ def listar_produtos(busca="", categoria_id=None):
 
 def buscar_produto(id):
     return consultar(
-        "SELECT id, nome, descricao, categoria_id, preco, estoque FROM produtos WHERE id = %s",
+        "SELECT id, nome, descricao, categoria_id, preco, estoque, imagem FROM produtos WHERE id = %s",
         (id,),
         um=True,
     )
 
 
-def cadastrar_produto(nome, categoria_id, preco, estoque):
+def cadastrar_produto(nome, categoria_id, preco, estoque, imagem=None):
     executar(
-        "INSERT INTO produtos (nome, categoria_id, preco, estoque) VALUES (%s, %s, %s, %s)",
-        (nome, categoria_id, preco, estoque),
+        "INSERT INTO produtos (nome, categoria_id, preco, estoque, imagem) VALUES (%s, %s, %s, %s, %s)",
+        (nome, categoria_id, preco, estoque, imagem),
     )
 
 
-def atualizar_produto(id, nome, categoria_id, preco, estoque):
+def atualizar_produto(id, nome, categoria_id, preco, estoque, imagem=None):
     executar(
-        "UPDATE produtos SET nome = %s, categoria_id = %s, preco = %s, estoque = %s WHERE id = %s",
-        (nome, categoria_id, preco, estoque, id),
+        "UPDATE produtos SET nome = %s, categoria_id = %s, preco = %s, estoque = %s, imagem = %s WHERE id = %s",
+        (nome, categoria_id, preco, estoque, imagem, id),
     )
 
 
@@ -91,7 +91,11 @@ def ajustar_estoque_produto(id, delta):
 # ---------- kits ----------
 
 def listar_kits():
-    return consultar("SELECT id, nome, itens, descricao, preco, estoque FROM kits ORDER BY id")
+    return consultar("SELECT id, nome, itens, descricao, preco, estoque, imagem FROM kits ORDER BY id")
+
+
+def atualizar_imagem_kit(id, imagem):
+    executar("UPDATE kits SET imagem = %s WHERE id = %s", (imagem, id))
 
 
 def ajustar_estoque_kit(id, delta):

@@ -67,7 +67,7 @@
     {% elif aba == "kits" %}
     <div class="tabela-wrap">
         <table>
-            <tr><th>Kit</th><th>Itens</th><th>Preço</th><th>Quantidade</th><th>Status</th></tr>
+            <tr><th>Kit</th><th>Itens</th><th>Preço</th><th>Quantidade</th><th>Status</th><th>Foto</th></tr>
             {% for k in kits %}
             <tr>
                 <td>{{ k.nome }}</td>
@@ -82,6 +82,18 @@
                     </form>
                 </td>
                 <td>{{ status(k.estoque, limite) }}</td>
+                <td>
+                    <form class="foto-form" action="/conta/estoque/kits/{{ k.id }}/imagem" method="POST">
+                        <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+                        <select name="imagem" aria-label="Foto do kit {{ k.nome }}">
+                            <option value="">Sem foto</option>
+                            {% for img in listar_imagens() %}
+                            <option value="{{ img }}" {{ 'selected' if k.imagem == img }}>{{ img|replace('produtos/', '') }}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn peq" type="submit">Salvar</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </table>

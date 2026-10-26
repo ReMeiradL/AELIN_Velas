@@ -7,6 +7,14 @@ import banco
 # Quantidade inicial de cada item. Ajuste depois no painel de estoque.
 ESTOQUE_INICIAL = 10
 
+# Fotos já enviadas ao projeto (static/img/produtos). Só entram em produtos que ainda estão sem foto.
+FOTOS = {
+    "Home spray": "produtos/home-spray.jpg",
+    "Difusor de varetas": "produtos/difusor.jpg",
+    "Escalda-pés": "produtos/escalda-pes.jpg",
+    "Sachê aromático": "produtos/sache.jpg",
+}
+
 CATEGORIAS = [
     "Velas",
     "Flores aromáticas",
@@ -164,6 +172,10 @@ CREATE TABLE IF NOT EXISTS usuarios (
 # Marca se a senha inicial já foi trocada (usada para o aviso de primeiro acesso).
 cursor.execute("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS senha_trocada BOOLEAN NOT NULL DEFAULT FALSE")
 
+# Nome do arquivo da foto (ex.: "produtos/flor-rosa.jpg", dentro de static/img). Vazio = sem foto.
+cursor.execute("ALTER TABLE produtos ADD COLUMN IF NOT EXISTS imagem TEXT")
+cursor.execute("ALTER TABLE kits ADD COLUMN IF NOT EXISTS imagem TEXT")
+
 for ordem, nome in enumerate(CATEGORIAS, start=1):
     cursor.execute(
         "INSERT INTO categorias (nome, ordem) VALUES (%s, %s) ON CONFLICT (nome) DO NOTHING",
@@ -188,6 +200,12 @@ if cursor.fetchone()["n"] == 0:
             "INSERT INTO kits (nome, itens, descricao, preco, estoque) VALUES (%s, %s, %s, %s, %s)",
             (nome, itens, descricao, preco, ESTOQUE_INICIAL),
         )
+
+for nome, imagem in FOTOS.items():
+    cursor.execute(
+        "UPDATE produtos SET imagem = %s WHERE nome = %s AND imagem IS NULL",
+        (imagem, nome),
+    )
 
 for nome, familia, notas in AROMAS:
     cursor.execute(

@@ -28,6 +28,15 @@
         <label for="estoque">Quantidade em estoque</label>
         <input type="number" id="estoque" name="estoque" min="0" value="{{ valores.estoque }}" required>
 
+        <label for="imagem">Foto</label>
+        <select id="imagem" name="imagem">
+            <option value="">Sem foto (mostra o quadro)</option>
+            {% for img in listar_imagens() %}
+            <option value="{{ img }}" {{ 'selected' if valores.imagem == img }}>{{ img|replace('produtos/', '') }}</option>
+            {% endfor %}
+        </select>
+        <p class="nota">Para uma foto aparecer aqui, coloque o arquivo na pasta <b>static/img/produtos</b> do projeto.</p>
+
         <p class="botoes">
             <button class="btn" type="submit">Salvar</button>
             <a class="btn sec-escuro" href="/conta/estoque">Cancelar</a>
