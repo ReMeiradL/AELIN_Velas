@@ -239,6 +239,9 @@ h1, h2, h3 { font-family: var(--titulo); font-weight: 600; line-height: 1.15; }
 .foto-img.retrato { aspect-ratio: 3 / 4; }
 .foto.retrato { aspect-ratio: 3 / 4; min-height: 0; margin-bottom: 0; }
 
+/* faixa larga (montagem 3:1) na página Velas: ocupa a largura toda, sem cortar */
+.foto-faixa { display: block; width: 100%; height: auto; aspect-ratio: 3 / 1; margin-top: 30px; border-radius: 4px; background: var(--papel2); }
+
 /* ----- cartões ----- */
 .grade { display: grid; gap: 20px; }
 .g3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }

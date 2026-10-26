@@ -9,6 +9,9 @@ ESTOQUE_INICIAL = 10
 
 # Fotos já enviadas ao projeto (static/img/produtos). Só entram em produtos que ainda estão sem foto.
 FOTOS = {
+    "Rosa": "produtos/rosa.jpg",
+    "Jasmim": "produtos/jasmim.jpg",
+    "Margarida": "produtos/margarida.jpg",
     "Home spray": "produtos/home-spray.jpg",
     "Difusor de varetas": "produtos/difusor.jpg",
     "Escalda-pés": "produtos/escalda-pes.jpg",
