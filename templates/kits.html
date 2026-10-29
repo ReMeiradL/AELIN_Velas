@@ -9,7 +9,7 @@
         <div class="grade g3">
             {% for k in kits %}
             <div class="card kit">
-                {{ foto(k.imagem, k.nome, "", "FOTO DO KIT") }}
+                {{ foto(k.imagem, k.nome, "paisagem", "FOTO DO KIT") }}
                 <h3>{{ k.nome }}</h3>
                 <div class="itens">{{ k.itens }}</div>
                 <p class="nota">{{ k.descricao }}</p>

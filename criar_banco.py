@@ -16,6 +16,18 @@ FOTOS = {
     "Difusor de varetas": "produtos/difusor.jpg",
     "Escalda-pés": "produtos/escalda-pes.jpg",
     "Sachê aromático": "produtos/sache.jpg",
+    "Tulipa": "produtos/tulipa.jpg",
+    "Aromatizador de carro": "produtos/aromatizador_de_carro.jpg",
+    "Wax melt": "produtos/wax_melt.jpg",
+}
+
+# Fotos dos kits, com a mesma regra: só entram em kits que ainda estão sem foto.
+FOTOS_KITS = {
+    "Descubra Aelin": "produtos/descubra_aelin.jpg",
+    "Ritual Aelin": "produtos/ritual_aelin.jpg",
+    "Casa Perfumada": "produtos/casa_perfumada.jpg",
+    "Jardim Aelin": "produtos/jardim_aelin.jpg",
+    "Presente Aelin": "produtos/presente_aelin.jpg",
 }
 
 CATEGORIAS = [
@@ -207,6 +219,12 @@ if cursor.fetchone()["n"] == 0:
 for nome, imagem in FOTOS.items():
     cursor.execute(
         "UPDATE produtos SET imagem = %s WHERE nome = %s AND imagem IS NULL",
+        (imagem, nome),
+    )
+
+for nome, imagem in FOTOS_KITS.items():
+    cursor.execute(
+        "UPDATE kits SET imagem = %s WHERE nome = %s AND imagem IS NULL",
         (imagem, nome),
     )
 
