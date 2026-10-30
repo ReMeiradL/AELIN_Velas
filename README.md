@@ -18,6 +18,21 @@ Exceção: a pasta `.claude/skills/frontend-design` é material de terceiros, di
 
 Para pedir autorização de uso: Instagram [@aelinvelas](https://instagram.com/aelinvelas).
 
+## Endereço e hospedagem
+
+- **Site:** https://aelinvelas.com.br (o `www` redireciona para o endereço sem `www`, e o `http` para `https`).
+- **Hospedagem:** Render (Web Service com Docker + Gunicorn e banco PostgreSQL). Cada `push` na `main` publica sozinho.
+- **Domínio:** `aelinvelas.com.br`, registrado no Superdomínio. O certificado HTTPS é emitido e renovado pelo Render.
+- **DNS (zona no Superdomínio):**
+
+  | Nome | Tipo | Valor |
+  |---|---|---|
+  | `@` | A | `216.24.57.1` (IP indicado pelo Render para domínio raiz) |
+  | `www` | CNAME | `aelin-velas-aromaticas.onrender.com.` (com o ponto final) |
+
+  Os registros `NS` do domínio não devem ser alterados. No painel do Superdomínio, o valor do CNAME precisa terminar com
+  ponto; sem ele o painel acrescenta o domínio ao final e o `www` deixa de funcionar.
+
 ## Estrutura
 
 ```
